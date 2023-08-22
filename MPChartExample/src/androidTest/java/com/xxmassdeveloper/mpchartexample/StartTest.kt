@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.test.core.graphics.writeToTestStorage
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onData
+import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
@@ -22,6 +23,7 @@ import org.junit.rules.TestName
 import org.junit.runner.RunWith
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 
 @RunWith(AndroidJUnit4::class)
 class StartTest {
@@ -56,6 +58,7 @@ class StartTest {
                     .inAdapterView(allOf(withId(R.id.listView1), isCompletelyDisplayed()))
                     .atPosition(index).perform(click())
 
+                openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
                 Espresso.onView(ViewMatchers.isRoot())
                     .captureToBitmap()
                     .writeToTestStorage("${javaClass.simpleName}_${nameRule.methodName}-${index}-${it.simpleName}")
