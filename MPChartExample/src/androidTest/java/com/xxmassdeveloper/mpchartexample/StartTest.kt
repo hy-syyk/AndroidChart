@@ -55,10 +55,11 @@ class StartTest {
                 Log.d(nameRule.methodName, "Intended ${index}-${it.simpleName}")
 
                 onData(anything())
-                    .inAdapterView(allOf(withId(R.id.listView1), isCompletelyDisplayed()))
+                    .inAdapterView(allOf(withId(R.id.listViewMain), isCompletelyDisplayed()))
                     .atPosition(index).perform(click())
 
                 openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
+                Thread.sleep(4000)
                 Espresso.onView(ViewMatchers.isRoot())
                     .captureToBitmap()
                     .writeToTestStorage("${javaClass.simpleName}_${nameRule.methodName}-${index}-${it.simpleName}")
