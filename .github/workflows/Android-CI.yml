@@ -9,7 +9,7 @@ on:
 jobs:
   buildTest:
     name: Build & Test JDK ${{ matrix.java_version }}
-    runs-on: macOS-latest
+    runs-on: ARM64
     strategy:
       matrix:
         java_version: [ 17 ]
@@ -28,7 +28,7 @@ jobs:
           java-version: ${{ matrix.java_version }}
       - uses: gradle/wrapper-validation-action@v1
       - name: Install Android SDK
-        uses: malinskiy/action-android/install-sdk@release/0.1.4
+        uses: hannesa2/action-android/install-sdk@0.1.4.10
       - name: Build project
         run: ./gradlew assembleDebug
       - name: Run tests
@@ -36,12 +36,12 @@ jobs:
       - name: Test jitpack publish command
         run: ./gradlew :MPChartLib:publishToMavenLocal
       - name: Run instrumentation tests
-        uses: malinskiy/action-android/emulator-run-cmd@release/0.1.4
+        uses: hannesa2/action-android/emulator-run-cmd@0.1.4.10
         with:
           cmd: ./gradlew cAT --continue
-          api: 28
-          tag: default
-          abi: x86_64
+          api: 34
+          tag: 'google_apis'
+          abi: arm64-v8a
           cmdOptions: -noaudio -no-boot-anim -no-window
       - name: Archive Espresso results
         uses: actions/upload-artifact@v3
@@ -61,7 +61,7 @@ jobs:
       - name: Compare screenshots
         run: |
           ls -ls MPChartExample/build/outputs/connected_android_test_additional_output/debugAndroidTest/connected
-          cp MPChartExample/build/outputs/connected_android_test_additional_output/debugAndroidTest/connected/emulator\(AVD\)\ -\ 9/* screenshotsToCompare
+          cp MPChartExample/build/outputs/connected_android_test_additional_output/debugAndroidTest/connected/emulator\(AVD\)\ -\ 14/* screenshotsToCompare
           ./screenShotCompare.sh
       - name: Archive screenshots diffs
         if: ${{ always() }}
