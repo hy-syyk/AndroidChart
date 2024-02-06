@@ -29,6 +29,7 @@ import com.xxmassdeveloper.mpchartexample.custom.RadarMarkerView;
 import com.xxmassdeveloper.mpchartexample.notimportant.DemoBase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RadarChartActivity extends DemoBase {
 
@@ -104,6 +105,7 @@ public class RadarChartActivity extends DemoBase {
         float mul = 80;
         float min = 20;
         int cnt = 5;
+        Double[] sampleValues = DataTools.Companion.getValues(cnt + 1);
 
         ArrayList<RadarEntry> entries1 = new ArrayList<>();
         ArrayList<RadarEntry> entries2 = new ArrayList<>();
@@ -111,10 +113,10 @@ public class RadarChartActivity extends DemoBase {
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
         for (int i = 0; i < cnt; i++) {
-            float val1 = (float) (Math.random() * mul) + min;
+            float val1 = (float) (sampleValues[i].floatValue() * mul) + min;
             entries1.add(new RadarEntry(val1));
 
-            float val2 = (float) (Math.random() * mul) + min;
+            float val2 = (float) (sampleValues[i + 1].floatValue() * mul) + min;
             entries2.add(new RadarEntry(val2));
         }
 
@@ -147,6 +149,13 @@ public class RadarChartActivity extends DemoBase {
         data.setValueTextColor(Color.WHITE);
 
         chart.setData(data);
+        List<Integer> colorList = new ArrayList<>();
+        colorList.add(Color.rgb(222, 166, 111));
+        colorList.add(Color.rgb(220, 206, 138));
+        colorList.add(Color.rgb(243, 255, 192));
+        colorList.add(Color.rgb(240, 255, 240));
+        colorList.add(Color.rgb(250, 255, 250));
+        chart.setLayerColorList(colorList);
         chart.invalidate();
     }
 
@@ -162,7 +171,7 @@ public class RadarChartActivity extends DemoBase {
         switch (item.getItemId()) {
             case R.id.viewGithub: {
                 Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse("https://github.com/PhilJay/MPAndroidChart/blob/master/MPChartExample/src/com/xxmassdeveloper/mpchartexample/RadarChartActivity.java"));
+                i.setData(Uri.parse("https://github.com/AppDevNext/AndroidChart/blob/master/MPChartExample/src/main/java/com/xxmassdeveloper/mpchartexample/RadarChartActivity.java"));
                 startActivity(i);
                 break;
             }

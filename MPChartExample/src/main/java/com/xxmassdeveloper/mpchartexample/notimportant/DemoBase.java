@@ -7,10 +7,14 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.github.mikephil.charting.data.BubbleEntry;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -48,10 +52,6 @@ public abstract class DemoBase extends AppCompatActivity implements ActivityComp
         tfLight = Typeface.createFromAsset(getAssets(), "OpenSans-Light.ttf");
     }
 
-    protected float getRandom(float range, float start) {
-        return (float) (Math.random() * range) + start;
-    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -60,6 +60,7 @@ public abstract class DemoBase extends AppCompatActivity implements ActivityComp
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_STORAGE) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 saveToGallery();
